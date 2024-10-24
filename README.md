@@ -1,5 +1,4 @@
-# Herbalverifier
- "Herbal verifier" using image processing software to identify medicinal plants, and supply chain integrity. Created a simple e-commerce vwith the integration of a Roboflow trained model through the Roboflow API to the platform facilitate accurate plant identification and supports reliable sourcing of medicinal herbs.
-
-
-hello iam jeevi
+# Database-connectivity-for-website-using-local-server
+install xampp and import the sql file provided here
+copy the project into the htdocs and get start the mysql server and apache server.
+Now, you can acess the project output on localhost(Browser).

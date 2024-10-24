@@ -1,113 +1,114 @@
 <?php
-    session_start();
-    require "./includes/head.php" ;
-
-    if(isset($_SESSION['email'])){
-        echo "<script> location.href='/ecommerce'; </script>";
-        exit();
-    }
+require 'config.php';
+if(isset($_POST["submit"])){
+       $username = $_POST["username"];
+       $email = $_POST["email"];
+       $password = $_POST["password"];
+       $confirmpassword = $_POST["confirmpassword"];
+       $duplicate = mysqli_query($conn, "SELECT * FROM userdetails WHERE username='$username' OR email ='$email'");
+       if(mysqli_num_rows($duplicate)>0){
+         echo
+         "<script> alert('Username or Email Has Already Taken');</script>";
+       }
+       else{
+              if($password == $confirmpassword){
+                     $query= "INSERT INTO userdetails VALUES('','$username','$email','$password')";
+                     mysqli_query($conn,$query);
+                     echo
+                     "<script> alert('Registration Suscccessfully Done');</script>";
+              }
+              else{
+                     echo
+                     "<script> alert('Password is Mismatching ');</script>";
+              }
+       }
+}
 ?>
 
-    <section class="breadcrumb breadcrumb_bg">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-8">
-                    <div class="breadcrumb_iner">
-                        <div class="breadcrumb_iner_item">
-                            <h2>Register</h2>
-                            <p>Home <span>-</span> User Registration</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <section class="login_part padding_top">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-6 col-md-6">
-                    <div class="login_part_text text-center">
-                        <div class="login_part_text_iner">
-                            <h2>Already a User</h2>
-                            <p>
-                                There are advances being made in science and technology everyday, and a good example of this is the
-                            </p>
-                            <a href="login.php" class="btn_3">Login now</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-md-6">
-                    <div class="login_part_form">
-                        <div class="login_part_form_iner">
-                            <h3>
-                                Welcome to Our Store ! <br /> Please Sign Up now
-                            </h3>
-                            <form class="row contact_form" action="scripts/signup_script.php" method="post">
-                                <div class="col-md-6 form-group p_star">
-                                    <input type="text" class="form-control" required id="fname" name="fname" value="" placeholder="First Name" />
-                                </div>
-                                <div class="col-md-6 form-group p_star">
-                                    <input type="text" class="form-control" required id="lname" name="lname" value="" placeholder="Last Name" />
-                                </div>
-                                <div class="col-md-12 form-group p_star">
-                                    <input type="number" class="form-control" required id="mobile" name="mobile" value="" placeholder="Mobile Number" />
-                                </div>
-                                <div class="col-md-12 form-group p_star">
-                                    <input type="email" class="form-control" required id="email" name="email" value="" placeholder="Email Address" />
-                                </div>
-                                <div class="col-md-12 form-group p_star">
-                                    <input type="password" class="form-control" required id="password" name="password" value="" placeholder="Password" />
-                                </div>
-                                <div class="col-md-12 form-group">
-                                    <button type="submit" value="submit" class="btn_3">
-											log in
-										</button>
-                                    <a class="lost_pass" href="#">forget password?</a>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <?php require "./includes/footer.php" ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="form.css">
+    <style>
+      body{
+        background-image: url("home.jpg");
+        background-size: cover;
+      }
+        .bnt button {
+  background-color: transparent ;
+  position: sticky ;
+  top: 32px;
+  
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+ .bnt button:hover{
+  transform: rotateY(180deg);
+  transition: transform 0.8s;
+  background-color: darkgoldenrod;
+  transform: rotateY(  180deg );
+  color: white;
+ 
+}
 
-    <script src="js/jquery-1.12.1.min.js"></script>
-    <script src="js/popper.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/jquery.magnific-popup.js"></script>
-    <script src="js/swiper.min.js"></script>
-    <script src="js/masonry.pkgd.js"></script>
-    <script src="js/owl.carousel.min.js"></script>
-    <script src="js/jquery.nice-select.min.js"></script>
-    <script src="js/slick.min.js"></script>
-    <script src="js/jquery.counterup.min.js"></script>
-    <script src="js/waypoints.min.js"></script>
-    <script src="js/contact.js"></script>
-    <script src="js/jquery.ajaxchimp.min.js"></script>
-    <script src="js/jquery.form.js"></script>
-    <script src="js/jquery.validate.min.js"></script>
-    <script src="js/mail-script.js"></script>
-    <script src="js/stellar.js"></script>
-    <script src="js/price_rangs.js"></script>
-    <script src="js/custom.js"></script>
+        </style>
+   
 
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
+</head>
+<body><div style='background-color:brown; text-align: right;'class='bnt'>
+<p style='background-color: transparent ;
+  color: white;
+  text-align: right;
+  margin-right: 10%;
+  display: inline ;
+  font-size: 25px;'>AI ENABLE Pre-PARKING USING OPENCV</p>
+   <a href="index.php">  <button>HOME</BUTTON></a>
+   <a href="aboutus.php"> <button>ABOUT US</button></a>
+    <a href="userlogin.php"> <button>LOGIN</button></a>
+    <a href="Register.php"> <button>REGISTER</button></a>
+    <button>CONTACT</button>
+   
+</div>
+<b><div class='centered'>
+<form method="post" >
+   <h1 style="font-size:50px; text-align: center;">User Register </h1>
 
-        function gtag() {
-            dataLayer.push(arguments);
-        }
-        gtag('js', new Date());
 
-        gtag('config', 'UA-23581568-13');
-    </script>
-    <script defer src="https://static.cloudflareinsights.com/beacon.min.js/vaafb692b2aea4879b33c060e79fe94621666317369993" integrity="sha512-0ahDYl866UMhKuYcW078ScMalXqtFJggm7TmlUtp0UlD4eQk0Ixfnm5ykXKvGJNFjLMoortdseTfsRT8oCfgGA==" data-cf-beacon='{"rayId":"7721ac11f91d3390","token":"cd0b4b3a733644fc843ef0b185f98241","version":"2022.11.3","si":100}'
-        crossorigin="anonymous"></script>
+
+   <label for="username">User Name: </label>
+            <input type="text" id="username" name="username" placeholder="Enter the Username" required style='  width:100%;'>
+            <br><br>
+
+
+            <label for="email">E-mail:  </label>
+            <input type="text" id="email" name="email" placeholder="Enter the E-mail" required style='  width:100%;'>
+            <br><br>
+
+            <label for="password">Password:            </label>
+             <input type="password" id="password" name="password" placeholder="Create a password" required style='  width:100%;'>
+            
+
+            <br><br>
+         <label for="confirmpassword">Conform Password:            </label>
+             <input type="password" id="confirmpassword" name="confirmpassword" placeholder="Confirm Your password" required style='  width:100%;'>
+            <br><br>
+         <button type="submit" name="submit" style='  width:100%;' >Register</button >
+          </form>
+</div></b>
+
+
+
 </body>
-
 </html>
